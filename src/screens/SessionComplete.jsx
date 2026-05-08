@@ -46,10 +46,13 @@ export default function SessionComplete() {
     <div className="min-h-screen bg-[#1a1a2e] flex flex-col">
       {/* Header */}
       <header className="flex items-center justify-center px-6 py-5 border-b border-white/10">
-        <div className="flex items-center gap-2">
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+        >
           <span className="text-2xl font-bold text-white">parle</span>
           <span className="text-2xl font-bold text-[#5340c8]">.fr</span>
-        </div>
+        </button>
       </header>
 
       <main className="flex-1 flex items-center justify-center p-6">

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronDown, BookOpen, MessageCircle, Mic, Trophy } from 'lucide-react'
+import { BookOpen, MessageCircle, Mic, Trophy, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { generatePhrases } from '@/lib/generatePhrases'
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1']
 const LENGTHS = ['Short', 'Medium', 'Long']
@@ -36,11 +37,22 @@ export default function SessionSetup() {
   const navigate = useNavigate()
   const [level, setLevel] = useState('B1')
   const [length, setLength] = useState('Medium')
-  const [phrases, setPhrases] = useState(10)
+  const [phrases, setPhrases] = useState(5)
   const [topic, setTopic] = useState('Everyday conversation')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleStart = () => {
-    navigate('/speaking', { state: { level, length, phrases, topic } })
+  const handleStart = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const generatedPhrases = await generatePhrases({ level, length, phrases, topic })
+      navigate('/speaking', { state: { level, length, phrases, topic, generatedPhrases } })
+    } catch (err) {
+      setError('Could not generate phrases. Check your API key and try again.')
+      console.error(err)
+      setLoading(false)
+    }
   }
 
   return (
@@ -111,15 +123,15 @@ export default function SessionSetup() {
             <CardContent>
               <input
                 type="range"
-                min={5}
-                max={30}
-                step={5}
+                min={3}
+                max={10}
+                step={1}
                 value={phrases}
                 onChange={(e) => setPhrases(Number(e.target.value))}
                 className="w-full accent-[#5340c8] cursor-pointer"
               />
               <div className="flex justify-between text-xs text-white/30 mt-2">
-                {[5, 10, 15, 20, 25, 30].map((n) => (
+                {[3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                   <span key={n}>{n}</span>
                 ))}
               </div>
@@ -141,9 +153,16 @@ export default function SessionSetup() {
             </CardContent>
           </Card>
 
-          <Button size="lg" className="w-full mt-2" onClick={handleStart}>
-            <Mic size={18} />
-            Start session
+          {error && (
+            <p className="text-red-400 text-sm text-center bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+              {error}
+            </p>
+          )}
+
+          <Button size="lg" className="w-full mt-2" onClick={handleStart} disabled={loading}>
+            {loading
+              ? <><Loader2 size={18} className="animate-spin" /> Creating your phrases…</>
+              : <><Mic size={18} /> Start session</>}
           </Button>
         </div>
       </main>
