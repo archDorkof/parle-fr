@@ -62,7 +62,7 @@ export default function SessionSetup() {
         <div className="flex items-center gap-2">
           <span className="text-2xl font-bold text-white">parle</span>
           <span className="text-2xl font-bold text-[#5340c8]">.fr</span>
-          <span className="text-xs text-white/30 ml-1 mt-1">v1.11</span>
+          <span className="text-xs text-white/30 ml-1 mt-1">v1.12</span>
         </div>
       </header>
 
