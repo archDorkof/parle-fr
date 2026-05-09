@@ -142,7 +142,7 @@ export default function Speaking() {
 
       const res = await fetch('/api/openai/v1/audio/transcriptions', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}` },
+        headers: {},
         body: formData,
       })
 

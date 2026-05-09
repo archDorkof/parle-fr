@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen, MessageCircle, Mic, Trophy, Loader2 } from 'lucide-react'
+import { Mic, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { generatePhrases } from '@/lib/generatePhrases'
@@ -64,17 +64,6 @@ export default function SessionSetup() {
           <span className="text-2xl font-bold text-[#5340c8]">.fr</span>
           <span className="text-xs text-white/30 ml-1 mt-1">v1.11</span>
         </div>
-        <nav className="flex items-center gap-1">
-          <button className="p-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-all">
-            <BookOpen size={18} />
-          </button>
-          <button className="p-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-all">
-            <MessageCircle size={18} />
-          </button>
-          <button className="p-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-all">
-            <Trophy size={18} />
-          </button>
-        </nav>
       </header>
 
       {/* Main */}
