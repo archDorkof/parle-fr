@@ -130,10 +130,6 @@ export default function SessionComplete() {
               <RotateCcw size={16} />
               New session
             </Button>
-            <Button variant="secondary" size="lg" className="w-full" onClick={() => navigate('/conversation')}>
-              <MessageCircle size={16} />
-              Continue in AI conversation
-            </Button>
           </div>
         </div>
       </main>

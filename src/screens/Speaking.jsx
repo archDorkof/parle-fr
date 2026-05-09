@@ -13,7 +13,7 @@ const FALLBACK_PHRASES = [
   { fr: "L'addition, s'il vous plaît.", en: 'The bill, please.' },
 ]
 
-const MAX_SECONDS = 8
+const LENGTH_SECONDS = { 'Single word': 5, Short: 8, Medium: 10, Long: 12 }
 
 function normalize(str) {
   return str
@@ -72,13 +72,14 @@ function ScoreRing({ score }) {
 export default function Speaking() {
   const navigate = useNavigate()
   const { state } = useLocation()
-  const config = state || { level: 'B1', phrases: 5, topic: 'Everyday conversation' }
+  const config = state || { level: 'B1', phrases: 5, topic: 'Everyday conversation', length: 'Medium' }
+  const maxSeconds = LENGTH_SECONDS[config.length] ?? 10
   const phraseList = state?.generatedPhrases?.length ? state.generatedPhrases : FALLBACK_PHRASES
 
   const [phraseIdx, setPhraseIdx] = useState(0)
   const [recording, setRecording] = useState(false)
   const [analysing, setAnalysing] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(MAX_SECONDS)
+  const [timeLeft, setTimeLeft] = useState(maxSeconds)
   const [result, setResult] = useState(null)
   const [playbackUrl, setPlaybackUrl] = useState(null)
   const [scores, setScores] = useState([])
@@ -110,7 +111,7 @@ export default function Speaking() {
     setPlaybackUrl(null)
     setResult(null)
     setError(null)
-    setTimeLeft(MAX_SECONDS)
+    setTimeLeft(maxSeconds)
   }, [phraseIdx])
 
   const speak = (rate = 1) => {
@@ -156,7 +157,7 @@ export default function Speaking() {
       console.error(err)
     } finally {
       setAnalysing(false)
-      setTimeLeft(MAX_SECONDS)
+      setTimeLeft(maxSeconds)
     }
   }
 
@@ -191,10 +192,10 @@ export default function Speaking() {
 
       mediaRecorder.start()
       setRecording(true)
-      setTimeLeft(MAX_SECONDS)
+      setTimeLeft(maxSeconds)
 
       countdownRef.current = setInterval(() => setTimeLeft((t) => t - 1), 1000)
-      autoStopRef.current = setTimeout(stopRecording, MAX_SECONDS * 1000)
+      autoStopRef.current = setTimeout(stopRecording, maxSeconds * 1000)
     } catch (err) {
       const msg = {
         NotAllowedError: 'Microphone permission denied — check browser site settings.',

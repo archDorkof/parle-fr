@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { generatePhrases } from '@/lib/generatePhrases'
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1']
-const LENGTHS = ['Short', 'Medium', 'Long']
+const LENGTHS = ['Single word', 'Short', 'Medium', 'Long']
 const TOPICS = [
   'Everyday conversation',
   'Travel & directions',
@@ -62,6 +62,7 @@ export default function SessionSetup() {
         <div className="flex items-center gap-2">
           <span className="text-2xl font-bold text-white">parle</span>
           <span className="text-2xl font-bold text-[#5340c8]">.fr</span>
+          <span className="text-xs text-white/30 ml-1 mt-1">v1.11</span>
         </div>
         <nav className="flex items-center gap-1">
           <button className="p-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-all">

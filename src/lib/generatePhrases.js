@@ -1,13 +1,25 @@
 const WORD_BOUNDS = {
-  Short:  { min: 4,  max: 7  },
-  Medium: { min: 8,  max: 13 },
-  Long:   { min: 14, max: 20 },
+  'Single word': { min: 1, max: 1 },
+  Short:         { min: 4, max: 7  },
+  Medium:        { min: 8, max: 13 },
+  Long:          { min: 14, max: 20 },
 }
 
 export async function generatePhrases({ level, length, phrases, topic }) {
   const { min, max } = WORD_BOUNDS[length] ?? WORD_BOUNDS.Medium
 
-  const prompt = `Generate ${phrases} French practice phrases for a ${level} CEFR level learner.
+  const prompt = length === 'Single word'
+    ? `Generate ${phrases} French vocabulary words for a ${level} CEFR level learner.
+Topic: ${topic}
+Requirements:
+- Single words only — no articles, no phrases
+- Appropriate vocabulary for ${level}
+- Varied words — no repetition
+- Each word must have an accurate English translation
+
+Return ONLY a JSON array with no extra text, markdown, or code fences:
+[{"fr":"mot","en":"word"}]`
+    : `Generate ${phrases} French practice phrases for a ${level} CEFR level learner.
 Topic: ${topic}
 Phrase length: ${min}–${max} words each (count all words including articles and prepositions)
 Requirements:
