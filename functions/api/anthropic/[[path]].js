@@ -8,6 +8,8 @@ export async function onRequest(context) {
   headers.set('x-api-key', env.ANTHROPIC_API_KEY)
   headers.set('anthropic-version', '2023-06-01')
   headers.delete('anthropic-dangerous-direct-browser-access')
+  headers.delete('origin')
+  headers.delete('referer')
 
   const response = await fetch(targetUrl, {
     method: request.method,
